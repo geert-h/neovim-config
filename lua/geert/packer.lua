@@ -21,6 +21,16 @@ return require('packer').startup(function(use)
 	  end
   })
 
+  use({
+  "zbirenbaum/copilot.lua",
+  config = function()
+    require("copilot").setup({
+      suggestion = { enabled = true },
+      panel = { enabled = true },
+    })
+  end,
+})
+
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
   use('theprimeagen/harpoon')
   use('mbbill/undotree')
@@ -30,6 +40,8 @@ return require('packer').startup(function(use)
   use({'neovim/nvim-lspconfig'})
   use({'hrsh7th/nvim-cmp'})
   use({'hrsh7th/cmp-nvim-lsp'})
+  use({ 'williamboman/mason.nvim' })
+  use({ 'williamboman/mason-lspconfig.nvim' })
 
 end)
 

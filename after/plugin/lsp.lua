@@ -26,6 +26,15 @@ lsp_zero.extend_lspconfig({
 
 -- These are just examples. Replace them with the language
 -- servers you have installed in your system
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = { "omnisharp" },
+  handlers = {
+    lsp_zero.default_setup,
+  },
+})
+
 require('lspconfig').gleam.setup({})
 require('lspconfig').rust_analyzer.setup({})
 
