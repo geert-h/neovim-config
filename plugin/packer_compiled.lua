@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/Users/geerth/.cache/nvim/packer_hererocks/2.1.1736781742/share/lua/5.1/?.lua;/Users/geerth/.cache/nvim/packer_hererocks/2.1.1736781742/share/lua/5.1/?/init.lua;/Users/geerth/.cache/nvim/packer_hererocks/2.1.1736781742/lib/luarocks/rocks-5.1/?.lua;/Users/geerth/.cache/nvim/packer_hererocks/2.1.1736781742/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/Users/geerth/.cache/nvim/packer_hererocks/2.1.1736781742/lib/lua/5.1/?.so"
+local package_path_str = "/Users/geerth/.cache/nvim/packer_hererocks/2.1.1770848219/share/lua/5.1/?.lua;/Users/geerth/.cache/nvim/packer_hererocks/2.1.1770848219/share/lua/5.1/?/init.lua;/Users/geerth/.cache/nvim/packer_hererocks/2.1.1770848219/lib/luarocks/rocks-5.1/?.lua;/Users/geerth/.cache/nvim/packer_hererocks/2.1.1770848219/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/geerth/.cache/nvim/packer_hererocks/2.1.1770848219/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -89,7 +89,7 @@ _G.packer_plugins = {
   },
   ["copilot.lua"] = {
     after = { "copilot-cmp" },
-    config = { "\27LJ\2\nˆ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\npanel\1\0\1\fenabled\2\15suggestion\1\0\2\npanel\0\15suggestion\0\1\0\1\fenabled\1\nsetup\fcopilot\frequire\0" },
+    config = { "\27LJ\2\nˆ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\npanel\1\0\1\fenabled\2\15suggestion\1\0\2\15suggestion\0\npanel\0\1\0\1\fenabled\1\nsetup\fcopilot\frequire\0" },
     loaded = true,
     only_config = true,
     path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/copilot.lua",
@@ -120,6 +120,21 @@ _G.packer_plugins = {
     path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/nvim-dap",
+    url = "https://github.com/mfussenegger/nvim-dap"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    url = "https://github.com/rcarriga/nvim-dap-ui"
+  },
+  ["nvim-dap-virtual-text"] = {
+    loaded = true,
+    path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
+    url = "https://github.com/theHamsta/nvim-dap-virtual-text"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
@@ -129,6 +144,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    url = "https://github.com/nvim-tree/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -146,6 +166,11 @@ _G.packer_plugins = {
     path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/rose-pine",
     url = "https://github.com/rose-pine/neovim"
   },
+  ["telescope-file-browser.nvim"] = {
+    loaded = true,
+    path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/telescope-file-browser.nvim",
+    url = "https://github.com/nvim-telescope/telescope-file-browser.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -160,18 +185,25 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/geerth/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
+  },
+  vimtex = {
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex",
+    url = "https://github.com/lervag/vimtex"
   }
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: copilot.lua
+time([[Config for copilot.lua]], true)
+try_loadstring("\27LJ\2\nˆ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\npanel\1\0\1\fenabled\2\15suggestion\1\0\2\15suggestion\0\npanel\0\1\0\1\fenabled\1\nsetup\fcopilot\frequire\0", "config", "copilot.lua")
+time([[Config for copilot.lua]], false)
 -- Config for: rose-pine
 time([[Config for rose-pine]], true)
 try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\26colorscheme rose-pine\bcmd\bvim\0", "config", "rose-pine")
 time([[Config for rose-pine]], false)
--- Config for: copilot.lua
-time([[Config for copilot.lua]], true)
-try_loadstring("\27LJ\2\nˆ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\npanel\1\0\1\fenabled\2\15suggestion\1\0\2\npanel\0\15suggestion\0\1\0\1\fenabled\1\nsetup\fcopilot\frequire\0", "config", "copilot.lua")
-time([[Config for copilot.lua]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-cmp ]]
@@ -181,6 +213,26 @@ vim.cmd [[ packadd copilot-cmp ]]
 try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16copilot_cmp\frequire\0", "config", "copilot-cmp")
 
 time([[Sequenced loading]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType tex ++once lua require("packer.load")({'vimtex'}, { ft = "tex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType plaintex ++once lua require("packer.load")({'vimtex'}, { ft = "plaintex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType bib ++once lua require("packer.load")({'vimtex'}, { ft = "bib" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
+vim.cmd [[augroup filetypedetect]]
+time([[Sourcing ftdetect script at: /Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/cls.vim]], true)
+vim.cmd [[source /Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/cls.vim]]
+time([[Sourcing ftdetect script at: /Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/cls.vim]], false)
+time([[Sourcing ftdetect script at: /Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tex.vim]], true)
+vim.cmd [[source /Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tex.vim]]
+time([[Sourcing ftdetect script at: /Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tex.vim]], false)
+time([[Sourcing ftdetect script at: /Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tikz.vim]], true)
+vim.cmd [[source /Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tikz.vim]]
+time([[Sourcing ftdetect script at: /Users/geerth/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tikz.vim]], false)
+vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then
