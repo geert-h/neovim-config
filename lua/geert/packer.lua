@@ -21,23 +21,6 @@ return require('packer').startup(function(use)
         end
     })
 
-    use({
-        "zbirenbaum/copilot.lua",
-        config = function()
-            require("copilot").setup({
-                suggestion = { enabled = false }, -- disable ghost text
-                panel = { enabled = true },
-            })
-        end,
-    })
-    use ({
-        "zbirenbaum/copilot-cmp",
-        after = { "copilot.lua", "nvim-cmp" },
-        config = function()
-            require("copilot_cmp").setup()
-        end
-    })
-
     use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
     use {'nvim-tree/nvim-web-devicons'}
     use {'nvim-telescope/telescope-file-browser.nvim'}
@@ -59,4 +42,3 @@ return require('packer').startup(function(use)
     }
     use 'theHamsta/nvim-dap-virtual-text'
 end)
-
