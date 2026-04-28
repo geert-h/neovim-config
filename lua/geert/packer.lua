@@ -23,6 +23,16 @@ return require('packer').startup(function(use)
 
     use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
     use {'nvim-tree/nvim-web-devicons'}
+    use {'MunifTanjim/nui.nvim'}
+    use {
+        'nvim-neo-tree/neo-tree.nvim',
+        branch = 'v3.x',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'MunifTanjim/nui.nvim',
+            'nvim-tree/nvim-web-devicons',
+        }
+    }
     use {'nvim-telescope/telescope-file-browser.nvim'}
     use('theprimeagen/harpoon')
     use('mbbill/undotree')
