@@ -92,6 +92,17 @@ local function format_rust(bufnr)
   })
 end
 
+local function format_clang(bufnr)
+  vim.lsp.buf.format({
+    bufnr = bufnr,
+    async = false,
+    timeout_ms = 10000,
+    filter = function(client)
+      return client.name == 'clangd'
+    end,
+  })
+end
+
 local function set_lsp_keymaps(bufnr)
   local o = { buffer = bufnr }
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, o)
@@ -111,10 +122,14 @@ local function set_lsp_keymaps(bufnr)
   vim.keymap.set('n', '<leader>rf', function()
     format_rust(bufnr)
   end, o)
+  vim.keymap.set('n', '<leader>cf', function()
+    format_clang(bufnr)
+  end, o)
 end
 
 local agda_ls_path = vim.fn.expand("~/.ghcup/bin/als")
 local rust_format_augroup = vim.api.nvim_create_augroup('geert-rust-format', { clear = true })
+local clang_format_augroup = vim.api.nvim_create_augroup('geert-clang-format', { clear = true })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
@@ -128,6 +143,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
         buffer = args.buf,
         callback = function()
           format_rust(args.buf)
+        end,
+      })
+    end
+
+    if client and client.name == 'clangd' then
+      vim.api.nvim_clear_autocmds({ group = clang_format_augroup, buffer = args.buf })
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        group = clang_format_augroup,
+        buffer = args.buf,
+        callback = function()
+          format_clang(args.buf)
         end,
       })
     end
