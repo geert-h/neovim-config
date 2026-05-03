@@ -103,6 +103,44 @@ local function format_clang(bufnr)
   })
 end
 
+local function organize_go_imports(bufnr)
+  local params = vim.lsp.util.make_range_params(0, 'utf-8')
+  params.context = {
+    only = { 'source.organizeImports' },
+    diagnostics = {},
+  }
+
+  local results = vim.lsp.buf_request_sync(bufnr, 'textDocument/codeAction', params, 1000)
+  if not results then
+    return
+  end
+
+  for _, result in pairs(results) do
+    for _, action in ipairs(result.result or {}) do
+      if action.edit then
+        vim.lsp.util.apply_workspace_edit(action.edit, 'utf-8')
+      end
+
+      if action.command then
+        vim.lsp.buf.execute_command(action.command)
+      end
+    end
+  end
+end
+
+local function format_go(bufnr)
+  organize_go_imports(bufnr)
+
+  vim.lsp.buf.format({
+    bufnr = bufnr,
+    async = false,
+    timeout_ms = 10000,
+    filter = function(client)
+      return client.name == 'gopls'
+    end,
+  })
+end
+
 local function set_lsp_keymaps(bufnr)
   local o = { buffer = bufnr }
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, o)
@@ -125,11 +163,15 @@ local function set_lsp_keymaps(bufnr)
   vim.keymap.set('n', '<leader>cf', function()
     format_clang(bufnr)
   end, o)
+  vim.keymap.set('n', '<leader>gf', function()
+    format_go(bufnr)
+  end, o)
 end
 
 local agda_ls_path = vim.fn.expand("~/.ghcup/bin/als")
 local rust_format_augroup = vim.api.nvim_create_augroup('geert-rust-format', { clear = true })
 local clang_format_augroup = vim.api.nvim_create_augroup('geert-clang-format', { clear = true })
+local go_format_augroup = vim.api.nvim_create_augroup('geert-go-format', { clear = true })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
@@ -157,6 +199,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end,
       })
     end
+
+    if client and client.name == 'gopls' then
+      vim.api.nvim_clear_autocmds({ group = go_format_augroup, buffer = args.buf })
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        group = go_format_augroup,
+        buffer = args.buf,
+        callback = function()
+          format_go(args.buf)
+        end,
+      })
+    end
   end,
 })
 
@@ -166,7 +219,7 @@ vim.lsp.config('*', {
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = { "clangd", "rust_analyzer", "omnisharp" },
+  ensure_installed = { "clangd", "rust_analyzer", "omnisharp", "gopls" },
 })
 
 local clangd_cmd = {
@@ -207,6 +260,22 @@ vim.lsp.config('rust_analyzer', {
   end,
 })
 
+vim.lsp.config('gopls', {
+  root_dir = function(bufnr, on_dir)
+    on_dir(resolve_root(bufnr, { 'go.work', 'go.mod', '.git' }))
+  end,
+  settings = {
+    gopls = {
+      gofumpt = true,
+      staticcheck = true,
+      analyses = {
+        shadow = true,
+        unusedparams = true,
+      },
+    },
+  },
+})
+
 vim.lsp.config('agda_ls', {
   cmd = vim.fn.executable(agda_ls_path) == 1 and { agda_ls_path } or { 'als' },
   root_dir = function(bufnr, on_dir)
@@ -215,9 +284,9 @@ vim.lsp.config('agda_ls', {
 })
 
 vim.lsp.enable({
--- It is therefore not efficient for large lists.
   'clangd',
   'rust_analyzer',
+  'gopls',
   'omnisharp',
   'agda_ls',
   'hls',
